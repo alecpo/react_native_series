@@ -22,7 +22,7 @@ export default class AddTask extends Component {
 
     save = () => {
         if(!this.state.desc.trim()){
-            Alert.alert('Datos inválidos', 'Informe uma descrição para continuar')
+            Alert.alert('Dados inválidos', 'Informe uma descrição para a tarefa')
             return
         }
         
@@ -38,8 +38,8 @@ export default class AddTask extends Component {
             if (e.action !== DatePickerAndroid.dismissedAction){
                 const momentDate = moment(this.state.date)
                 momentDate.date(e.day)
-                momentDate.date(e.month)
-                momentDate.date(e.year)
+                momentDate.month(e.month)
+                momentDate.year(e.year)
                 this.setState({ date: momentDate.toDate() })
             }
         })

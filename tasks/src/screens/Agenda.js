@@ -6,7 +6,8 @@ import {
     FlatList,
     ImageBackground,
     TouchableOpacity,
-    Platform
+    Platform,
+    AsyncStorage
 } from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -51,8 +52,7 @@ export default class Agenda extends Component {
     }
     
     addTask = task => {
-        const tasks = {...this.state.tasks}
-        tasks.push({
+        const tasks = this.state.tasks.concat({
             id: Math.random(),
             desc: task.desc,
             estimateAt: task.date,
@@ -61,6 +61,11 @@ export default class Agenda extends Component {
 
         this.setState({ tasks, showAddTask: false }
             , this.filterTasks)
+    }
+
+    deleteTask = id => {
+        const tasks = this.state.tasks.filter(task => task.id !== id)
+        this.setState({ tasks }, this.filterTasks)
     }
 
     filterTasks = () => {
@@ -72,6 +77,7 @@ export default class Agenda extends Component {
             visibleTasks = this.state.tasks.filter(pending)
         }
         this.setState({ visibleTasks })
+        AsyncStorage.setItem('tasks', JSON.stringify(this.state.tasks))
     }
 
     toggleFilter = () => {
@@ -79,7 +85,9 @@ export default class Agenda extends Component {
             , this.filterTasks)
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
+        const data = await AsyncStorage.getItem('tasks')
+        const tasks = JSON.parse(date) || []
         this.filterTasks()
     }
 
@@ -119,7 +127,8 @@ export default class Agenda extends Component {
                     <FlatList data={this.state.visibleTasks}
                         keyExtractor={item => `${item.id}`}
                         renderItem={({ item }) => 
-                            <Task {...item} toggleTask={this.toggleTask} />} />
+                            <Task {...item} toggleTask={this.toggleTask}
+                                onDelete={this.deleteTask} />} />                             
                 </View>
                 <ActionButton buttonColor={commonStyles.colors.today}
                     onPress={() => { this.setState({ showAddTask: true}) }} />
