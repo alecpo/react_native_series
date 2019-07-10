@@ -7,11 +7,11 @@ module.exports = app => {
         .get(app.api.tasks.getTasks)
         .post(app.api.tasks.save)
 
-    app.rout('/tasks/:id')
+    app.route('/tasks/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.tasks.remove)
 
-    app.rout('/tasks/:id/toggle')
+    app.route('/tasks/:id/toggle')
         .all(app.config.passport.authenticate())
         .put(app.api.tasks.toggleTask)
 }
