@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import commonStyles from '../commonStyles'
+import AuthInput from '../componentes/AuthInput'
 import backgroundImage from '../../assets/imgs/login.jpg'
 
 export default class Auth extends React.Component {
@@ -38,18 +39,19 @@ export default class Auth extends React.Component {
             {this.state.stageNew ? 'Crie a sua conta': 'Informe seus dados'}
           </Text>
           {this.state.stageNew && 
-            <TextInput placeholder='Nome' style={styles.input}
+            <AuthInput icon='user' placeholder='Nome' style={styles.input}
               value={this.state.name}
               onChangeText={(name) => this.setState({ name })} />
           }
-          <TextInput placeholder='E-mail' style={styles.input}
+          <AuthInput icon='at' placeholder='E-mail' style={styles.input}
             value={this.state.email}
             onChangeText={(email) => this.setState({ email })} />
-          <TextInput placeholder='Senha' style={styles.input}
+          <AuthInput icon='lock' secureTextEntry={true}
+            placeholder='Senha' style={styles.input}
             value={this.state.password}
             onChangeText={(password) => this.setState({ password })} />
           {this.state.stageNew &&
-            <TextInput 
+            <AuthInput icon='asterisk' 
               secureTextEntry={true} placeholder='Confirmação'
               style={styles.input}
               value={this.state.confirmPassword}
