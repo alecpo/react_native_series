@@ -79,7 +79,7 @@ export default class AddTask extends Component {
                 <View style={styles.container}>
                     <Text style={styles.header}>Nova Tarefa!</Text>
                         <TextInput placeholder="Descrição..." style={styles.input}
-                            onChangeText={desc => this.setState({ desc })}
+                            onChangeText={desc => this.setState({ desc })} 
                             value={this.state.desc}/>
                         {datePicker}
                         <View style={{
